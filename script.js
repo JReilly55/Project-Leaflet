@@ -17,7 +17,7 @@ $.getJSON("https://raw.githubusercontent.com/JReilly55/Project-Leaflet/main/USA_
   var fire = L.geoJson(data,{
       pointToLayer: function(feature,latlng){
         var marker = L.marker(latlng,{icon: Icon});
-        marker.bindPopup('<b>'+feature.properties.IncidentName + '</b><br>' + feature.properties.DailyAcres + '<br/>');
+        marker.bindPopup('<b>'+feature.properties.IncidentName + '</b><br>' + "Total Burned Acres: "+ feature.properties.DailyAcres + '<br/>');
         return marker;
       }
     });
