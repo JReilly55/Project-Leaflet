@@ -8,18 +8,24 @@ var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/to
   ext: "png"
 }).addTo(mymap);
 
-var fire = $.getJSON("https://raw.githubusercontent.com/JReilly55/Project-Leaflet/main/USA_Current_Wildfires.geojson",function(data){
+$.getJSON("https://raw.githubusercontent.com/JReilly55/Project-Leaflet/main/USA_Current_Wildfires.geojson",function(data){
     var Icon = L.icon({
     iconUrl: 'https://www.mfc.ms.gov/wp-content/uploads/2020/11/Smokey-Head.png',
     iconSize: [30,30]
   }); 
   
-  L.geoJson(data,{
-    pointToLayer: function(feature,latlng){
-	  return L.marker(latlng,{icon: Icon});
-    }
-  }).addTo(mymap);
+  var fire = L.geoJson(data,{
+      pointToLayer: function(feature,latlng){
+        var marker = L.marker(latlng,{icon: Icon});
+        marker.bindPopup('<b>'+feature.properties.IncidentName + '</b><br>' + feature.properties.DailyAcres + '<br/>');
+        return marker;
+      }
+    });
+    mymap.addLayer(fire);
 });
+  
+ // point.bindPopup("<b>"+fire.properties.IncidentName+"</b><br>"+fire.properties.DailyAcres+'</br>').openPopup();
+//;
 
 $.getJSON("https://raw.githubusercontent.com/JReilly55/Project-Leaflet/main/Drought%20(1).geojson",function(data2){
   L.geoJson(data2, {
